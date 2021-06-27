@@ -1,0 +1,34 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      /* 
+        Q. 삼각형 판별하기
+        (💡 삼각형의 결정조건: 세 변의 길이를 알 때 -> 가장 긴 변의 길이가 다른 두 변의 길이의 합보다 작아야)
+      */
+      function solution(a, b, c) {
+        let answer = "YES";
+        let max;
+
+        // 가장 긴 변 구하기
+        if (a > b) max = a;
+        else max = b;
+        if (c > max) max = c;
+
+        // 삼각형 판별하기
+        let sum = a + b + c - max;
+        if (sum <= max) {
+          // < 가 아니라 <= 부등호 사용해야 함
+          answer = "NO";
+        }
+
+        return answer;
+      }
+
+      console.log(solution(13, 33, 17));
+    </script>
+  </body>
+</html>

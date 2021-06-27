@@ -1,0 +1,32 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      /* 
+        Q. 세 수 중 최솟값
+        NOTE: 처음엔 삼항연산자로 풀었으나 if else문이 가독성이 좋아 변경함
+      */
+      function solution(a, b, c) {
+        let answer;
+
+        if (a < b) {
+          answer = a;
+        } else {
+          answer = b;
+        }
+
+        // c가 큰 경우는 그냥 넘어가면 됨
+        if (c < answer) {
+          answer = c;
+        }
+
+        return answer;
+      }
+
+      console.log(solution(2, 5, 1));
+    </script>
+  </body>
+</html>
