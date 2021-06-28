@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      /* 
+        Q. 최솟값 구하기
+      */
+      function solution(arr) {
+        let answer;
+        // 비교값을 미리 큰 값으로 초기화 혹은 arr[0]으로 초기화
+        let min = Number.MAX_SAFE_INTEGER;
+
+        for (let n of arr) {
+          // 첫번째 n은 무조건 min에 대입됨
+          if (n < min) {
+            min = n;
+          }
+        }
+        answer = min;
+
+        return answer;
+      }
+
+      /* 
+        💡 내장함수로 최솟값, 최댓값 구하기 
+      */
+      function solution2(arr) {
+        let answer;
+
+        // let min = arr.reduce((acc, curr) => Math.min(acc, curr));
+        let min = Math.min(...arr);
+        let max = Math.max.apply(null, arr); // null: this에 할당하고 싶은 객체
+
+        answer = `min: ${min}, max: ${max}`;
+        return answer;
+      }
+
+      let arr = [5, 7, 1, 3, 2, 9, 11];
+      console.log(solution(arr));
+      console.log(solution2(arr));
+    </script>
+  </body>
+</html>
