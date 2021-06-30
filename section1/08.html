@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      /* 
+        Q. 9개의 숫자가 주어질 때, 그 중에서 합이 100이 되는 7개의 숫자를 입력된 순서대로 출력
+          (가능한 정답이 여러 가지인 경우엔 아무거나 출력)
+        NOTE: 함정 숫자 2개를 뽑아서 나머지의 합이 100이 되는지, 경우의 수를 체크 
+      */
+      function solution(arr) {
+        let answer = arr;
+        let sum = arr.reduce((acc, curr) => acc + curr);
+        let tmp = []; // 함정 2개 들어갈 배열
+
+        for (let i = 0; i < arr.length - 1; i++) {
+          // 이미 함정 2개가 뽑아졌다면 반복문 빠져나옴(모든 경우의 수를 알 필욘 없기 때문)
+          if (tmp.length !== 0) {
+            break;
+          }
+          for (let j = i + 1; j < arr.length - 1; j++) {
+            let checkedSum = sum - (arr[i] + arr[j]);
+            if (checkedSum === 100) {
+              tmp.push(arr[i]);
+              tmp.push(arr[j]);
+            }
+          }
+        }
+
+        answer.splice(answer.indexOf(tmp[0]), 1);
+        answer.splice(answer.indexOf(tmp[1]), 1);
+
+        return answer;
+      }
+
+      let arr = [20, 7, 23, 19, 10, 15, 25, 8, 13];
+      console.log(solution(arr));
+    </script>
+  </body>
+</html>

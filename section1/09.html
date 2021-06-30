@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      /* 
+        Q. 대문자 A를 #으로 
+      */
+      function solution(s) {
+        let answer = "";
+        for (let x of s) {
+          if (x === "A") {
+            answer += "#";
+          } else {
+            answer += x;
+          }
+        }
+        return answer;
+      }
+
+      function solution2(s) {
+        let answer = s;
+
+        // 💡 문자열은 pass by value -> 참조값이 전달되는 얕은 복사가 아니므로 answer는 변하지 않음
+        // s = s.replaceAll("A", "#");
+
+        answer = answer.replace(/A/g, "#"); // g: global
+        return answer;
+      }
+
+      let str = "BANANA";
+      console.log(solution(str));
+      console.log(solution2(str));
+    </script>
+  </body>
+</html>

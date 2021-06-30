@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      /* 
+        Q. 날짜의 일의 자리 숫자와 7대의 자동차 번호 끝 두자리 숫자가 주어질 때 
+           10부제를 위반하는 차량 수 구하기 
+      */
+      function solution(day, arr) {
+        let answer = 0;
+
+        for (let n of arr) {
+          // 💡 어떤 숫자든 10으로 나누면 나머지는 일의 자리 숫자이고, 몫은 그 앞의 숫자들이다.
+          if (n % 10 === day) {
+            answer++;
+          }
+        }
+
+        return answer;
+      }
+
+      arr = [12, 20, 54, 30, 87, 91, 30];
+      console.log(solution(0, arr));
+    </script>
+  </body>
+</html>
