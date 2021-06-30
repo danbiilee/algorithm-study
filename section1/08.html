@@ -13,25 +13,21 @@
       function solution(arr) {
         let answer = arr;
         let sum = arr.reduce((acc, curr) => acc + curr);
-        let tmp = []; // 함정 2개 들어갈 배열
 
+        // 💡 마지막에는 arr[7]과 arr[8]를 비교하고 끝나면 되므로, 바깥 반복문은 8번이 아니라 7번만 돌면 됨
         for (let i = 0; i < arr.length - 1; i++) {
-          // 이미 함정 2개가 뽑아졌다면 반복문 빠져나옴(모든 경우의 수를 알 필욘 없기 때문)
-          if (tmp.length !== 0) {
-            break;
-          }
-          for (let j = i + 1; j < arr.length - 1; j++) {
-            let checkedSum = sum - (arr[i] + arr[j]);
-            if (checkedSum === 100) {
-              tmp.push(arr[i]);
-              tmp.push(arr[j]);
+          for (let j = i + 1; j < arr.length; j++) {
+            let comparedSum = sum - (arr[i] + arr[j]);
+            if (comparedSum === 100) {
+              // 💡 arr[i]부터 지우면 뒤의 요소들이 한 칸씩 당겨져서 인덱스 값이 바뀌므로 arr[j]을 지울 때에 영향을 줌
+              // 뒤의 요소 arr[j]부터 지우면 앞의 인덱스는 그대로 있기 때문에 가능
+              arr.splice(j, 1);
+              arr.splice(i, 1);
             }
           }
         }
 
-        answer.splice(answer.indexOf(tmp[0]), 1);
-        answer.splice(answer.indexOf(tmp[1]), 1);
-
+        // 💡 얕은 복사(by참조)가 되기 때문에 arr 배열을 수정 후 answer를 리턴해도 결과는 같음
         return answer;
       }
 
