@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      /* 
+        Q. 대문자 찾기: 문자열에 대문자가 몇 개 있는지 
+      */
+      function mySolution(s) {
+        let answer = s.match(/[A-Z]/g).length;
+        return answer;
+      }
+
+      function solution1(s) {
+        let answer = 0;
+        for (let x of s) {
+          if (x === x.toUpperCase()) {
+            answer++;
+          }
+        }
+        return answer;
+      }
+
+      /* 
+        💡 아스키코드 
+        대문자: 65 ~ 90
+        소문자: 97 ~ 122 
+      */
+      function solution2(s) {
+        let answer = 0;
+        for (let x of s) {
+          let num = x.charCodeAt(); // string -> aschii
+          if (num >= 65 && num <= 90) {
+            answer++;
+          }
+        }
+        return answer;
+      }
+
+      let str = "KoreaTimeGood";
+      console.log(solution2(str));
+    </script>
+  </body>
+</html>

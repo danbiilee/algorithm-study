@@ -1,0 +1,37 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      /* 
+        Q. 문자 찾기: 특정 문자가 입력받은 문자열에 몇 개 존재하는지 
+      */
+      function mySolution(s, t) {
+        let answer = s.match(new RegExp(t, "g")).length;
+        return answer;
+      }
+
+      function solution1(s, t) {
+        let answer = 0;
+        for (let x of s) {
+          if (x === t) {
+            answer++;
+          }
+        }
+        return answer;
+      }
+
+      function solution2(s, t) {
+        // 💡 str 맨 마지막에 구분자가 있다면, split 배열 맨 마지막 요소로는
+        // 빈 문자열이 들어오므로 length - 1 은 동일함
+        let answer = s.split(t).length - 1;
+        return answer;
+      }
+
+      let str = "COMPUTERPROGRAMMING";
+      console.log(solution2(str, "R"));
+    </script>
+  </body>
+</html>

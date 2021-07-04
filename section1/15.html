@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      /* 
+        Q. 가운데 문자 출력. 단, 단어의 길이가 짝수일 경우 가운데 2개의 문자를 출력
+      */
+      function mySolution(s) {
+        let answer;
+        let n = s.length;
+
+        if (n % 2 !== 0) {
+          answer = s[Math.floor(n / 2)];
+        } else {
+          answer = Array.call(null, ...s)
+            .splice(n / 2 - 1, 2)
+            .join("");
+        }
+
+        return answer;
+      }
+
+      // 💡 substring: startIndex ~ endIndex - 1
+      // 💡 substr: startIndex부터 length만큼
+      function solution(s) {
+        let answer = "";
+        let mid = Math.floor(s.length / 2); // floor: 몫
+
+        if (s.length % 2 !== 0) {
+          // answer = s.substring(mid, mid + 1);
+          answer = s.substr(mid, 1);
+        } else {
+          // answer = s.substring(mid - 1, mid + 1);
+          answer = s.substr(mid - 1, 2);
+        }
+
+        return answer;
+      }
+
+      console.log(solution("good"));
+    </script>
+  </body>
+</html>

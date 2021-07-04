@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      /* 
+        Q. N개의 문자열 중 가장 긴 문자열 출력.
+          각 문자열의 길이는 서로 다릅니다.
+      */
+      function mySolution(s) {
+        let answer = "";
+        let max = 0; // 긴 문자열의 인덱스로 접근
+
+        for (let i = 0; i < s.length; i++) {
+          if (s[i].length > s[max].length) {
+            max = i;
+          }
+        }
+        // 무조건 반복문을 다 돈 다음에 max를 가지고 답을 찾아야 된다고 생각함
+        answer = s[max];
+
+        return answer;
+      }
+
+      function solution(s) {
+        let answer = "";
+        let max = Number.MIN_SAFE_INTEGER;
+        for (let x of s) {
+          if (x.length > max) {
+            max = x.length;
+            answer = x;
+          }
+        }
+        return answer;
+      }
+
+      let str = ["teacher", "time", "student", "beautiful", "good"];
+      console.log(solution(str));
+    </script>
+  </body>
+</html>
