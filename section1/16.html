@@ -1,0 +1,51 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      /* 
+        Q. 중복문자제거
+      */
+      function mySolution(s) {
+        let answer = "";
+        for (let x of s) {
+          if (!answer.includes(x)) {
+            answer += x;
+          }
+        }
+        return answer;
+      }
+
+      function solution(s) {
+        let answer = "";
+        for (let i = 0; i < s.length; i++) {
+          // console.log(s[i], i, s.indexOf(s[i]));
+
+          // 💡 indexOf: 가장 처음에 일치한 문자의 위치를 반환
+          // indexOf로 검색한 위치와 현재 위치(i)가 같다면, 중복이 아니라는 뜻
+          if (s.indexOf(s[i]) === i) {
+            answer += s[i];
+          }
+        }
+        return answer;
+      }
+
+      /* 
+        +Q. 특정 문자 구하기: k의 개수
+      */
+      function getCount(s) {
+        let answer = 0;
+        let pos = s.indexOf("k");
+        // 💡 indexOf: 문자열을 찾지 못하면 -1을 반환
+        while (pos !== -1) {
+          answer++;
+          pos = s.indexOf("k", pos + 1); // 💡 이전 pos 위치 이후부터 검색
+        }
+        return answer;
+      }
+      console.log(solution("ksekkset"));
+    </script>
+  </body>
+</html>
