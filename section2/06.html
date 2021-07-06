@@ -1,0 +1,56 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      /* 
+        Q. 격자판 최대합
+        N의 격자판이 주어지면 각 행의 합, 각 열의 합, 두 대각선의 합 중 가 장 큰 합을 출력
+      */
+      function mySolution(arr) {
+        let answer = Number.MIN_SAFE_INTEGER;
+        let sum = [];
+        let crossSum = 0; // 0,0 1,1 2,2 3,3 4,4
+
+        for (let i = 0; i < arr.length; i++) {
+          let row = 0;
+          let col = 0;
+          for (let j = 0; j < arr[i].length; j++) {
+            if (i === j) {
+              crossSum += arr[i][j];
+            }
+            row += arr[i][j];
+            col += arr[j][i];
+          }
+          sum.push(row);
+          sum.push(col);
+        }
+        sum.push(crossSum);
+
+        for (let n of sum) {
+          if (n > answer) {
+            answer = n;
+          }
+        }
+
+        return answer;
+      }
+
+      function solution(arr) {
+        let answer;
+        return answer;
+      }
+
+      let arr = [
+        [10, 13, 10, 12, 15],
+        [12, 39, 30, 23, 11],
+        [11, 25, 50, 53, 15],
+        [19, 27, 29, 37, 27],
+        [19, 13, 30, 13, 19],
+      ];
+      console.log(solution(arr));
+    </script>
+  </body>
+</html>

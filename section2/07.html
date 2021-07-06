@@ -1,0 +1,61 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      /*
+        Q. 봉우리의 개수
+        N*N 격자판의 각 격자에는 그 지역의 높이가 쓰여있습니다. 자신의 상하좌우 숫자보다 큰 숫자는 봉우리 지역일 때 봉우리 지역이 몇 개 있는지 출력.
+        (격자의 가장자리는 0으로 초기화 되었다고 가정)
+
+           1,1
+        상 0,1
+        하 2,1
+        좌 1,0
+        우 1,2
+      */
+      function mySolution(arr) {
+        let answer = 0;
+        for (let i = 0; i < arr.length; i++) {
+          for (let j = 0; j < arr[i].length; j++) {
+            let n = [];
+            if (arr[i - 1] != null) {
+              n.push(arr[i - 1][j]);
+            }
+            if (arr[i + 1] != null) {
+              n.push(arr[i + 1][j]);
+            }
+            if (arr[i][j - 1] != null) {
+              n.push(arr[i][j - 1]);
+            }
+            if (arr[i][j + 1] != null) {
+              n.push(arr[i][j + 1]);
+            }
+
+            if (arr[i][j] > Math.max(...n)) {
+              answer++;
+            }
+          }
+        }
+
+        return answer;
+      }
+
+      function solution(arr) {
+        let answer = 0;
+        return answer;
+      }
+
+      let arr = [
+        [5, 3, 7, 2, 3],
+        [3, 7, 1, 6, 1],
+        [7, 2, 5, 3, 4],
+        [4, 3, 6, 4, 1],
+        [8, 7, 3, 5, 2],
+      ];
+      console.log(solution(arr));
+    </script>
+  </body>
+</html>
