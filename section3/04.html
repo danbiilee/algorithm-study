@@ -1,0 +1,63 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      /* 
+        Q. 문자열 s의 각 문자가 문자 t와 떨어진 최소거리를 출력
+          (문자열과 문자는 소문자로만 주어집니다.)
+          input: teachermode e 
+          output: 1 0 1 2 1 0 1 2 2 1 0
+      */
+      function solution(s, t) {
+        let answer = [];
+        let n = s.length;
+
+        for (let i = 0; i < n; i++) {
+          let len = [];
+          let flag = true;
+          let count = 1;
+
+          if (s[i] === t) {
+            len.push(0);
+            flag = false;
+          }
+
+          // 해당 문자보다 앞에 있는 문자들 탐색
+          if (flag && i > 0) {
+            for (let j = i - 1; j >= 0; j--) {
+              if (s[j] === t) {
+                len.push(count);
+                break;
+              } else {
+                count++;
+              }
+            }
+          }
+
+          count = 1;
+          // 해당 문자보다 뒤에 있는 문자들 탐색
+          if (flag && i < n - 1) {
+            for (let j = i + 1; j < n; j++) {
+              if (s[j] === t) {
+                len.push(count);
+                break;
+              } else {
+                count++;
+              }
+            }
+          }
+
+          answer.push(Math.min(...len));
+        }
+
+        return answer;
+      }
+
+      let str = "teachermode";
+      console.log(solution(str, "e"));
+    </script>
+  </body>
+</html>
