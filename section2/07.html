@@ -1,11 +1,11 @@
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>출력결과</title>
-  </head>
-  <body>
-    <script>
-      /*
+	<head>
+		<meta charset="UTF-8" />
+		<title>출력결과</title>
+	</head>
+	<body>
+		<script>
+			/*
         Q. 봉우리의 개수
         N*N 격자판의 각 격자에는 그 지역의 높이가 쓰여있습니다. 자신의 상하좌우 숫자보다 큰 숫자는 봉우리 지역일 때 봉우리 지역이 몇 개 있는지 출력.
         (격자의 가장자리는 0으로 초기화 되었다고 가정)
@@ -16,46 +16,81 @@
         좌 1,0
         우 1,2
       */
-      function mySolution(arr) {
-        let answer = 0;
-        for (let i = 0; i < arr.length; i++) {
-          for (let j = 0; j < arr[i].length; j++) {
-            let n = [];
-            if (arr[i - 1] != null) {
-              n.push(arr[i - 1][j]);
-            }
-            if (arr[i + 1] != null) {
-              n.push(arr[i + 1][j]);
-            }
-            if (arr[i][j - 1] != null) {
-              n.push(arr[i][j - 1]);
-            }
-            if (arr[i][j + 1] != null) {
-              n.push(arr[i][j + 1]);
-            }
+			function mySolution(arr) {
+				let answer = 0;
+				for (let i = 0; i < arr.length; i++) {
+					for (let j = 0; j < arr[i].length; j++) {
+						let n = [];
+						if (arr[i - 1] != null) {
+							n.push(arr[i - 1][j]);
+						}
+						if (arr[i + 1] != null) {
+							n.push(arr[i + 1][j]);
+						}
+						if (arr[i][j - 1] != null) {
+							n.push(arr[i][j - 1]);
+						}
+						if (arr[i][j + 1] != null) {
+							n.push(arr[i][j + 1]);
+						}
 
-            if (arr[i][j] > Math.max(...n)) {
-              answer++;
-            }
-          }
-        }
+						if (arr[i][j] > Math.max(...n)) {
+							answer++;
+						}
+					}
+				}
 
-        return answer;
-      }
+				return answer;
+			}
 
-      function solution(arr) {
-        let answer = 0;
-        return answer;
-      }
+			/* 
+        💥 풀이법
+        1. 상하좌우 이동을 위한 x, y 좌표 증감값을 배열에 담아두고, k-for문 돌면서 방향 탐색
+        2. 가장자리는 나보다 낮다고 생각할 것 
+      */
+			function solution(arr) {
+				let answer = 0;
+				let n = arr.length;
+				let dx = [-1, 1, 0, 0]; // 상, 하, 좌, 우
+				let dy = [0, 0, -1, 1];
 
-      let arr = [
-        [5, 3, 7, 2, 3],
-        [3, 7, 1, 6, 1],
-        [7, 2, 5, 3, 4],
-        [4, 3, 6, 4, 1],
-        [8, 7, 3, 5, 2],
-      ];
-      console.log(solution(arr));
-    </script>
-  </body>
+				for (let i = 0; i < n; i++) {
+					for (let j = 0; j < n; j++) {
+						let flag = true;
+						for (let k = 0; k < 4; k++) {
+							// 탐색할 x, y 좌표
+							let nx = i + dx[k];
+							let ny = j + dy[k];
+							// N*N 범위를 넘어서면(가장자리) 현재 값보다 작기 때문에 패스
+							// 상하좌우보다 커야하니까 >= 이면 false
+							if (
+								nx >= 0 &&
+								nx < n &&
+								ny >= 0 &&
+								ny < n &&
+								arr[nx][ny] >= arr[i][j]
+							) {
+								flag = false;
+								break;
+							}
+						}
+
+						if (flag) {
+							answer++;
+						}
+					}
+				}
+				return answer;
+			}
+
+			let arr = [
+				[5, 3, 7, 2, 3],
+				[3, 7, 1, 6, 1],
+				[7, 2, 5, 3, 4],
+				[4, 3, 6, 4, 1],
+				[8, 7, 3, 5, 2],
+			];
+			console.log(solution(arr));
+		</script>
+	</body>
 </html>

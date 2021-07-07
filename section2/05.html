@@ -1,22 +1,32 @@
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>출력결과</title>
-  </head>
-  <body>
-    <script>
-      /* 
+	<head>
+		<meta charset="UTF-8" />
+		<title>출력결과</title>
+	</head>
+	<body>
+		<script>
+			/*
 				Q. 등수 구하기
-				N명의 학생의 국어점수가 입력되면 각 학생의 등수를 입력된 순서대로 출력 
+				N명의 학생의 국어점수가 입력되면 각 학생의 등수를 입력된 순서대로 출력
 				(같은 점수가 입력될 경우 높은 등수로 동일 처리한다.)
+				💡원리: 전부 1등으로 초기화 해놓고 이중for문을 돌면서 나보다 큰 점수가 있다면 카운트, 같거나 작으면 패스
 			*/
-      function solution(arr) {
-        let answer;
-        return answer;
-      }
+			function solution(arr) {
+				let n = arr.length;
+				let answer = Array.from({ length: n }, () => 1);
 
-      let arr = [87, 89, 92, 100, 76];
-      console.log(solution(arr));
-    </script>
-  </body>
+				for (let i = 0; i < n; i++) {
+					for (let j = 0; j < n; j++) {
+						if (arr[j] > arr[i]) {
+							answer[i]++;
+						}
+					}
+				}
+				return answer;
+			}
+
+			let arr = [87, 89, 92, 100, 76];
+			console.log(solution(arr));
+		</script>
+	</body>
 </html>

@@ -1,56 +1,81 @@
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>출력결과</title>
-  </head>
-  <body>
-    <script>
-      /* 
+	<head>
+		<meta charset="UTF-8" />
+		<title>출력결과</title>
+	</head>
+	<body>
+		<script>
+			/* 
         Q. 격자판 최대합
         N의 격자판이 주어지면 각 행의 합, 각 열의 합, 두 대각선의 합 중 가 장 큰 합을 출력
       */
-      function mySolution(arr) {
-        let answer = Number.MIN_SAFE_INTEGER;
-        let sum = [];
-        let crossSum = 0; // 0,0 1,1 2,2 3,3 4,4
+			function mySolution(arr) {
+				let answer = Number.MIN_SAFE_INTEGER;
+				let sum = [];
+				let crossSum = 0; // 대각선 합 0,0 1,1 2,2 3,3 4,4 -> 💥 왜 하나만 구했냐!?
 
-        for (let i = 0; i < arr.length; i++) {
-          let row = 0;
-          let col = 0;
-          for (let j = 0; j < arr[i].length; j++) {
-            if (i === j) {
-              crossSum += arr[i][j];
-            }
-            row += arr[i][j];
-            col += arr[j][i];
-          }
-          sum.push(row);
-          sum.push(col);
-        }
-        sum.push(crossSum);
+				for (let i = 0; i < arr.length; i++) {
+					let row = 0; // 행의 합
+					let col = 0; // 열의 합
+					for (let j = 0; j < arr[i].length; j++) {
+						if (i === j) {
+							crossSum += arr[i][j];
+						}
+						row += arr[i][j];
+						col += arr[j][i];
+					}
+					sum.push(row);
+					sum.push(col);
+				}
+				sum.push(crossSum);
 
-        for (let n of sum) {
-          if (n > answer) {
-            answer = n;
-          }
-        }
+				for (let n of sum) {
+					if (n > answer) {
+						answer = n;
+					}
+				}
 
-        return answer;
-      }
+				return answer;
+			}
 
-      function solution(arr) {
-        let answer;
-        return answer;
-      }
+			/* 
+        💥 모든 합들을 배열에 넣어놓고 맨 마지막에 최대값을 구하는 게 아니라 매번 반복문을 돌 때마다 최대값 비교
+       */
+			function solution(arr) {
+				let answer = Number.MIN_SAFE_INTEGER;
+				let n = arr.length;
+				let sum1 = 0;
+				let sum2 = 0;
 
-      let arr = [
-        [10, 13, 10, 12, 15],
-        [12, 39, 30, 23, 11],
-        [11, 25, 50, 53, 15],
-        [19, 27, 29, 37, 27],
-        [19, 13, 30, 13, 19],
-      ];
-      console.log(solution(arr));
-    </script>
-  </body>
+				for (let i = 0; i < n; i++) {
+					sum1 = 0;
+					sum2 = 0;
+					for (let j = 0; j < n; j++) {
+						sum1 += arr[i][j];
+						sum2 += arr[j][i];
+					}
+					answer = Math.max(answer, sum1, sum2);
+				}
+
+				sum1 = 0;
+				sum2 = 0;
+				for (let i = 0; i < n; i++) {
+					sum1 += arr[i][i];
+					sum2 += arr[i][n - 1 - i];
+				}
+				answer = Math.max(answer, sum1, sum2);
+
+				return answer;
+			}
+
+			let arr = [
+				[10, 13, 10, 12, 15],
+				[12, 39, 30, 23, 11],
+				[11, 25, 50, 53, 15],
+				[19, 27, 29, 37, 27],
+				[19, 13, 30, 13, 19],
+			];
+			console.log(solution(arr));
+		</script>
+	</body>
 </html>
