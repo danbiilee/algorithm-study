@@ -5,11 +5,22 @@
   </head>
   <body>
     <script>
-      /* 
+      /*
         Q. 문자열이 주어지면 그 중 숫자만 추출하여 그 순서대로 자연수를 만듭니다.
       */
-      function solution(str) {
+      function mySolution(str) {
         let answer = parseInt(str.match(/[0-9]/g).join(""), 10);
+        return answer;
+      }
+
+      function solution(str) {
+        let answer = "";
+        for (let s of str) {
+          // 💡 isNaN: 문자열에서 숫자형 문자를 찾을 때 쓰는 메서드
+          if (!isNaN(s)) {
+            answer = answer * 10 + Number(s); // 💥 parseInt 메소드 쓰지 않고 풀기
+          }
+        }
         return answer;
       }
 
