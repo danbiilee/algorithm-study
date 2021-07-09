@@ -7,9 +7,37 @@
     <script>
       /* 
         ❗ 솔루션 두 개
+        Q. N개의 자연수가 입력되면 각 자연수를 뒤집은 후 그 뒤집은 수가 소수이면 그 소수를 출력
+          (각 자연수의 크기는 100,000를 넘지 않는다.)
+          
+        2 3 5 7 11 13 17 19...
       */
       function solution(arr) {
         let answer = [];
+        for (let n of arr) {
+          const reversed = parseInt(
+            Array.from(String(n)).reverse().join(""),
+            10
+          );
+
+          if (reversed > 1 && reversed <= 3) {
+            answer.push(reversed);
+          }
+
+          if (reversed > 3 && reversed % 2 !== 0) {
+            let flag = true;
+            for (let i = 3; i < Math.floor(reversed / 2); i += 2) {
+              if (reversed % i === 0) {
+                flag = false;
+                break;
+              }
+            }
+
+            if (flag) {
+              answer.push(reversed);
+            }
+          }
+        }
         return answer;
       }
 
