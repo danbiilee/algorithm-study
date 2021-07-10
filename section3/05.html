@@ -10,8 +10,7 @@
           반복되는 문자 바로 오른쪽에 반복 횟수를 표기
           (단 반복횟수가 1인 경우 생략)
       */
-
-      function solution(s) {
+      function mySolution(s) {
         let answer = "";
         let w = s[0];
         let count = 1;
@@ -29,6 +28,30 @@
             answer += `${w}${count > 1 ? count : ""}`;
           }
         }
+        return answer;
+      }
+
+      /* 
+        💥 cnt는 1로 초기화한 뒤 현재 문자와 그 다음 문자를 비교 
+        1. s[i] === s[i + 1] -> cnt++ 
+        2. s[i] !== s[i + 1] -> answer에 현재문자와 cnt 더해주고, cnt는 다시 1로 초기화 
+      */
+      function solution(s) {
+        let answer = "";
+        let cnt = 1;
+        s = s + " "; // 가장 마지막 문자를 비교하기 위해 빈 문자열을 더해줌
+
+        // 빈 문자열 전까지 반복해야 함
+        for (let i = 0; i < s.length - 1; i++) {
+          if (s[i] === s[i + 1]) {
+            cnt++;
+          } else {
+            answer += s[i];
+            if (cnt > 1) answer += cnt;
+            cnt = 1;
+          }
+        }
+
         return answer;
       }
 

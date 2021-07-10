@@ -5,8 +5,14 @@
   </head>
   <body>
     <script>
+      /* 
+        Q. 선생님이 가지고 있는 예산으로 최대 몇 명의 학생에게 선물을 사줄 수 있는지 구하기
+          N줄에 걸쳐 각 학생들이 받고 싶은 상품의 가격(짝수)과 배송비가 입력됩니다.
+          선생님은 상품 하나를 50% 할인해서 살 수 있는 쿠폰을 가지고 있습니다. 배송비는 할인에 포함되지 않습니다.
+      */
       function solution(m, product) {
         let answer = 0;
+        let max = Number.MIN_SAFE_INTEGER;
         return answer;
       }
 
@@ -17,7 +23,7 @@
         [4, 5],
         [10, 3],
       ];
-      console.log(solution(28, arr));
+      console.log(solution(28, arr)); // 4: (2, 2), (4, 3), (4, 5)와 (10, 3)를 할인받아 (5, 3)
     </script>
   </body>
 </html>
