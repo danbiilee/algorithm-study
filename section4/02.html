@@ -8,11 +8,11 @@
       /* 
         ❗ 솔루션 두 개
         Q. N개의 자연수가 입력되면 각 자연수를 뒤집은 후 그 뒤집은 수가 소수이면 그 소수를 출력
+          단 910를 뒤집으면 19로 숫자화 해야 한다. 첫 자리부터의 연속된 0은 무시한다.
           (각 자연수의 크기는 100,000를 넘지 않는다.)
-          
         2 3 5 7 11 13 17 19...
       */
-      function solution(arr) {
+      function mySolution(arr) {
         let answer = [];
         for (let n of arr) {
           const reversed = parseInt(
@@ -41,8 +41,47 @@
         return answer;
       }
 
+      // 💡 소수 구하기: 제곱근(혹은 최대 절반)까지만 돌면 됨
+      function isPrime(num) {
+        if (num === 1) {
+          return false;
+        }
+        for (let i = 2; i <= parseInt(Math.sqrt(num)); i++) {
+          if (num % i === 0) {
+            return false;
+          }
+        }
+        return true;
+      }
+
+      function solution(arr) {
+        let answer = [];
+
+        for (let x of arr) {
+          let res = 0;
+          /* 
+          💡 숫자 뒤집기
+          방법1: 몫/나머지, while문 - 15분
+          방법2: 내장 메서드
+          */
+          // 방법 1: 원본 숫자값 필요 없음
+          while (x) {
+            res = res * 10 + (x % 10);
+            x = parseInt(x / 10, 10);
+          }
+          // 방법 2
+          // res = parseInt(x.toString().split("").reverse().join(""), 10);
+
+          if (isPrime(res)) {
+            answer.push(res);
+          }
+        }
+
+        return answer;
+      }
+
       let arr = [32, 55, 62, 20, 250, 370, 200, 30, 100];
-      console.log(solution(arr));
+      console.log(solution(arr)); // 23 2 73 2 3
     </script>
   </body>
 </html>

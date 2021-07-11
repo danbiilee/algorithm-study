@@ -6,11 +6,10 @@
   <body>
     <script>
       /* 
-        ❗ 솔루션 두 개
         Q. N개의 자연수가 입력되면 각 자연수의 자릿수의 합을 구하고, 그 합이 최대인 자연수를 출력
           (단, 자릿수의 합이 같은 경우 원래 숫자가 큰 숫자를 답으로 합니다.)
       */
-      function solution(n, arr) {
+      function mySolution(n, arr) {
         let answer;
         let max = Number.MIN_SAFE_INTEGER;
         let maxIndex = 0; // 자릿수의 합이 같은 경우를 처리하기 위함
@@ -32,6 +31,43 @@
         }
 
         answer = max;
+        return answer;
+      }
+
+      function solution(n, arr) {
+        let answer;
+        let max = Number.MIN_SAFE_INTEGER;
+
+        for (let x of arr) {
+          /* 
+            💡 합 구하기 
+            방법1: 몫/나머지, while문 
+            방법2: 내장 메서드
+          */
+          // 방법1
+          let tmp = x; // 원본 숫자값은 변경하면 안됨(합이 같을 때 비교하기 위해)
+          let sum = 0;
+          while (tmp) {
+            sum += tmp % 10;
+            tmp = Math.floor(tmp / 10); // 몫
+          }
+
+          // 방법2: 더할 때 숫자화 해야 함
+          // const sum = x
+          //   .toString()
+          //   .split("")
+          //   .reduce((a, b) => a + Number(b), 0);
+
+          if (sum > max) {
+            max = sum;
+            answer = x; // 원본 숫자 대입
+          } else if (sum === max) {
+            if (x > answer) {
+              answer = x;
+            }
+          }
+        }
+
         return answer;
       }
 
