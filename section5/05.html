@@ -1,0 +1,55 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      /* 
+        Q. 최대 매출(Sliding Window)  
+          N일 동안의 매출기록 중 연속된 K일 동안의 최대 매출액이 얼마인지 구하라
+      */
+      function mySolution(k, arr) {
+        let answer;
+        let tmp = [];
+
+        for (let i = 0; i < arr.length - 2; i++) {
+          let sum = 0;
+          for (let j = i; j < i + 3; j++) {
+            sum += arr[j];
+          }
+          tmp.push(sum);
+        }
+
+        answer = Math.max(...tmp);
+        return answer;
+      }
+
+      /* 
+        💥 접근법 (O(n))
+        1. k 길이의 창문을 오른쪽으로 한 칸씩 밀어가면서 해당 범위의 합을 구함 
+        2. 합을 구할 때 처음부터 새롭게 구하는 게 아니라! 이전에 구한 합을 활용!!! 
+          arr[0] + arr[1] + arr[2] = sum
+                   arr[1] + arr[2] + arr[3]  ->  sum += (arr[3] - arr[0])
+      */
+      function solution(k, arr) {
+        let answer = 0;
+        let sum = 0;
+
+        // 처음 arr[0 ~ k] 합은 구하고 시작
+        for (let i = 0; i < k; i++) sum += arr[i];
+        answer = sum;
+
+        for (let i = k; i < arr.length; i++) {
+          sum += arr[i] - arr[i - k];
+          answer = Math.max(answer, sum);
+        }
+
+        return answer;
+      }
+
+      let a = [12, 15, 11, 20, 25, 10, 20, 19, 13, 15];
+      console.log(solution(3, a)); // 56: 11 + 20 + 25
+    </script>
+  </body>
+</html>
