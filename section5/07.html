@@ -1,0 +1,70 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      /* 
+        Q. 아나그램(해쉬)
+        길이가 같은 두 개의 단어가 주어지면 두 단어가 아나그램인지 판별하는 프로그램을 작성.
+        아나그램 판별시 대소문자가 구분됩니다.
+        
+        💡 아나그램: 나열 순서는 다르지만 그 구성이 일치하는 단어. 
+                    즉, 어느 한 단어를 재배열하면 상대편 단어가 될 수 있는 것
+      */
+      function mySolution(str1, str2) {
+        let answer = "YES";
+        const hash1 = new Map();
+        const hash2 = new Map();
+
+        for (let x of str1) {
+          if (hash1.has(x)) hash1.set(x, hash1.get(x) + 1);
+          else hash1.set(x, 1);
+        }
+        for (let x of str2) {
+          if (hash2.has(x)) hash2.set(x, hash2.get(x) + 1);
+          else hash2.set(x, 1);
+        }
+
+        for (let [key, value] of hash1) {
+          if (!hash2.has(key) || hash2.get(key) !== value) {
+            answer = "NO";
+            return answer;
+          }
+        }
+
+        return answer;
+      }
+
+      /* 
+        💥 접근법
+        1. str1의 해쉬를 구함 
+        2. str2와 비교해서 NO인지를 판별
+          - 해쉬에 키가 없다면 NO (구성이 다름)
+          - 키가 있다면 값을 -1 씩 상쇄시킴
+          - 키가 있는데 값이 0이라면 NO (개수가 다름)
+      */
+      function solution(str1, str2) {
+        let answer = "YES";
+
+        const hash = new Map();
+        for (let x of str1) {
+          if (hash.has(x)) hash.set(x, hash.get(x) + 1);
+          else hash.set(x, 1);
+        }
+
+        for (let x of str2) {
+          if (!hash.has(x) || hash.get(x) === 0) return "NO";
+          hash.set(x, hash.get(x) - 1);
+        }
+
+        return answer;
+      }
+
+      let a = "AbaAeCe";
+      let b = "baeeACA";
+      console.log(solution(a, b)); // YES: A(2), a(1), b(1), C(1), e(2)로 알파벳과 그 개수가 모두 일치
+    </script>
+  </body>
+</html>

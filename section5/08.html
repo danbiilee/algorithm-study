@@ -1,0 +1,114 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      /*
+        Q. 모든 아나그램 찾기(해쉬, 투포인터, 슬라이딩 윈도우)
+        S문자열에서 T문자열과 아나그램이 되는 S의 부분문자열의 개수를 구하는 프로그램을 작성.
+        아나그램 판별시 대소문자가 구분됩니다. 부분문자열은 연속된 문자열이어야 합니다.
+      */
+      function mySolution(s, t) {
+        let answer = 0;
+
+        const tHash = new Map();
+        for (let x of t) {
+          if (tHash.has(x)) tHash.set(x, tHash.get(x) + 1);
+          else tHash.set(x, 1);
+        }
+
+        /*
+          1. lt: 0 , rt: 3
+          2. 3칸씩 map 검사
+          3. 검사 끝나면 1칸씩 밀어서 다시 검사
+        */
+        const checkAnagram = (str) => {
+          const hash = new Map();
+          for (let x of str) {
+            if (hash.has(x)) hash.set(x, hash.get(x) + 1);
+            else hash.set(x, 1);
+          }
+
+          let bool = true;
+          for (let [key, value] of hash) {
+            if (!tHash.has(key) || tHash.get(key) !== value) {
+              bool = false;
+            }
+          }
+
+          if (bool) answer++;
+        };
+
+        for (let lt = 0; lt < s.length - 2; lt++) {
+          checkAnagram(s.substr(lt, t.length));
+        }
+
+        return answer;
+      }
+
+      /*
+        💥 접근법: rt 추가 -> 비교 -> lt 제거/증가 -> rt 증가/추가 -> 비교 -> ...
+        1. lt = 0, rt = t.length - 1
+        2. sHash에 lt ~ (rt-1) 자리까지 먼저 구해둠
+        3. sHash에 rt 자리값 추가하고 sHash와 tHash가 같은지 비교
+            -> key 개수 같은지, key 종류가 같은지, 각 key에 대한 값이 같은지
+        5. sHash에서 lt자리의 값을 빼고, lt + 1
+          *** map에서 값이 0이면 해당 key를 삭제해주기
+        6. rt + 1 하고, sHash에 rt 추가 -> 비교
+      */
+
+      function compareMaps(map1, map2) {
+        if (map1.size !== map2.size) return false;
+
+        for (let [key, value] of map1) {
+          if (!map2.has(key) || map2.get(key) !== value) return false;
+        }
+
+        return true;
+      }
+
+      function solution(s, t) {
+        let answer = 0;
+        const tHash = new Map();
+        const sHash = new Map();
+        const len = t.length - 1;
+
+        // 1. tHash 구하기
+        for (let x of t) {
+          if (tHash.has(x)) tHash.set(x, tHash.get(x) + 1);
+          else tHash.set(x, 1);
+        }
+
+        // 2. sHash 구하기: lt ~ (rt-1) 자리까지
+        for (let i = 0; i < len; i++) {
+          const key = s[i];
+          if (sHash.has(key)) sHash.set(key, sHash.get(key) + 1);
+          else sHash.set(key, 1);
+        }
+
+        // 3. rt 추가 -> 비교 -> ...
+        let lt = 0;
+        for (let rt = len; rt < s.length; rt++) {
+          const keyRt = s[rt];
+          if (sHash.has(keyRt)) sHash.set(keyRt, sHash.get(keyRt) + 1);
+          else sHash.set(keyRt, 1);
+
+          if (compareMaps(tHash, sHash)) answer++;
+
+          const keyLt = s[lt++];
+          const value = sHash.get(keyLt) - 1;
+          if (value === 0) sHash.delete(keyLt);
+          else sHash.set(keyLt, value);
+        }
+
+        return answer;
+      }
+
+      let a = "bacaAacba";
+      let b = "abc";
+      console.log(solution(a, b)); // 3: {bac}, {acb}, {cba}
+    </script>
+  </body>
+</html>
