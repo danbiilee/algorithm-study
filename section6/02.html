@@ -1,0 +1,56 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      /*
+        Q. 괄호문자제거(스택)
+        소괄호 ( ) 사이에 존재하는 모든 문자를 제거하고 남은 문자만 출력
+
+        )가 아니면 추가
+        )면 stack의 가장 최근 (까지 제거
+      */
+      function mySolution(s) {
+        let answer;
+        let stack = [];
+
+        for (let x of s) {
+          if (x !== ")") {
+            stack.push(x);
+          } else {
+            const i = stack.lastIndexOf("(");
+            stack.splice(i);
+          }
+        }
+
+        answer = stack.join("");
+        return answer;
+      }
+
+      /*
+        💥 접근법
+        1. 여는 괄호, 문자는 push
+        2. 닫는 괄호를 만나면 자기 짝(가장 최근에 push된 여는 괄호)까지 제거
+        3. 스택에 남은 문자들 리턴
+      */
+      function solution(s) {
+        let answer;
+        const stack = [];
+
+        for (let x of s) {
+          if (x === ")") {
+            while (stack.pop() !== "("); // 여는 괄호 팝한 뒤 종료됨
+          } else stack.push(x);
+        }
+
+        answer = stack.join("");
+        return answer;
+      }
+
+      let str = "(A(BC)D)EF(G(H)(IJ)K)LM(N)";
+      console.log(solution(str)); // EFLM
+    </script>
+  </body>
+</html>

@@ -1,0 +1,73 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      /* 
+        Q. 올바른 괄호(스택)
+        괄호가 입력되면 올바른 괄호이면 “YES", 올바르지 않으면 ”NO"를 출력
+        (())() === 'YES', (()())) === 'NO'
+
+        💡 스택 = LIFO
+           큐 = FIFO
+
+        x   stack
+        )     )   => 비교대상 없으면 추가
+        (         => 비교대상과 다르면 삭제
+        )     )   
+        )     ))  => 같으면 추가 
+        (     )
+        ( 
+      */
+      function mySolution(s) {
+        let answer = "YES";
+        const stack = [];
+
+        for (let x of s) {
+          const len = stack.length;
+          if (len === 0 || stack[len - 1] === x) {
+            stack.push(x);
+          } else {
+            stack.pop();
+          }
+        }
+
+        if (stack.length > 0) {
+          answer = "NO";
+        }
+
+        return answer;
+      }
+
+      /* 
+        💥 접근법
+        1. stack 배열 만들기
+        2. 여는 괄호는 push, 닫는 괄호는 자기 짝(가장 최근에 push된 여는 괄호)을 pop
+          *** 닫는 괄호인데 stack에 짝이 없다면 잘못된 괄호: (()))(
+        3. 올바른 괄호는 stack 배열 비워져있을 것이고, 여는 괄호가 많은 잘못된 괄호는 남아있을 것 
+      */
+      function solution(s) {
+        let answer = "YES";
+        const stack = [];
+
+        for (let x of s) {
+          if (x === "(") stack.push(x);
+          else {
+            // 닫는 괄호에 짝 없는 경우
+            if (stack.length === 0) return "NO";
+            else stack.pop();
+          }
+        }
+
+        if (stack.length !== 0) return "NO";
+
+        return answer;
+      }
+
+      let a = "(()(()))(()";
+      console.log(solution(a)); // NO
+    </script>
+  </body>
+</html>
