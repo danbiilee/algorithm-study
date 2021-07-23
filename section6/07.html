@@ -1,0 +1,58 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      /* 
+        Q. 교육과정 설계(큐)
+        필수과목순서가 주어지면 N개의 수업설계가 잘된 것이면 “YES", 잘못된 것이면 ”NO“를 출력하는 프로그램을 작성
+        필수과목이 CBA로 주어지면 B과목은 C과목을 이수한 후에 들어야 하고, A과목은 C와 B를 이수한 후에 들어야 한다는 뜻
+      */
+      function mySolution(need, plan) {
+        let answer = "YES";
+        const queue = need.split("");
+
+        for (let x of plan) {
+          if (x === queue[0]) queue.shift();
+          else {
+            if (queue.includes(x)) return "NO";
+          }
+        }
+
+        return answer;
+      }
+
+      /* 
+        💥 접근법
+        1. 필수과목 큐 만들기
+        2. 설계된 수업이 큐에 있는 필수과목인지 확인
+          - 필수 과목 아니면 그냥 패스
+          - 필수 과목이고 큐 0번째와 일치하면 shift하고 다음 수업 검사 
+          - 필수 과목인데 큐 0번째가 아니면 NO
+        3. 설계된 수업 탐색 끝났는데 큐에 남아있으면 NO: 설계에 필수과목 미포함된 경우 
+      */
+      function solution(need, plan) {
+        let answer = "YES";
+        const queue = need.split("");
+
+        for (let x of plan) {
+          if (queue.includes(x)) {
+            // 필수과목 이수 순서와 일치하지 않는 경우
+            if (x !== queue.shift()) return "no";
+          }
+        }
+
+        // 필수과목을 설계에 포함하지 않은 경우
+        if (queue.length > 0) return "NO";
+
+        return answer;
+      }
+
+      let a = "CBA";
+      let b = "CBDAGE";
+      console.log(solution(a, b)); // YES
+    </script>
+  </body>
+</html>

@@ -1,0 +1,67 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      /*
+        Q. 후위식 연산(postfix)(스택)
+          후위연산식이 주어지면 연산한 결과를 출력하는 프로그램을 작성
+          💡 후위 표기식
+          - 피연산자가 먼저쓰이고, 그 뒤로 연산자가 나오는 형태
+          - 읽는 법: 왼쪽에서 부터 순차적으로 읽기 시작한다. 피연산자(숫자)는 일단 지나치고, 
+                    연산자가 나오게 되면 연산자 앞쪽 두 개의 숫자로 연산을 진행
+      */
+      function mySolution(s) {
+        let answer;
+        const stack = [];
+
+        for (let x of s) {
+          if (/[+\-*/]/g.test(x)) {
+            const p2 = stack.pop();
+            const p1 = stack.pop();
+            stack.push(eval(p1 + x + p2));
+          } else {
+            stack.push(x);
+          }
+        }
+
+        answer = stack[0];
+        return answer;
+      }
+
+      /* 
+        1. 숫자 만나면 무조건 push
+        2. 연산자 만나면 두 개를 pop
+          *** lt, rt 구분 필수 => lt 연산자 rt
+        3. 최종적으로 stack에 결과값 하나만 남게 됨
+       */
+      function solution(s) {
+        let answer;
+        const stack = [];
+
+        for (let x of s) {
+          // 💡 isNaN(): 숫자 판별
+          if (isNaN(x)) {
+            const rt = stack.pop();
+            const lt = stack.pop();
+
+            if (x === "+") stack.push(lt + rt);
+            else if (x === "-") stack.push(lt - rt);
+            else if (x === "*") stack.push(lt * rt);
+            else stack.push(lt / rt);
+          } else {
+            stack.push(Number(x));
+          }
+        }
+
+        answer = stack[0];
+        return answer;
+      }
+
+      let str = "352+*9-"; // 중위표기식: 3*(5+2)-9
+      console.log(solution(str)); // 12
+    </script>
+  </body>
+</html>

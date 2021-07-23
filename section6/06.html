@@ -1,0 +1,59 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      /* 
+        💡 큐: FIFO
+
+        Q. 공주 구하기(큐)
+        1번부터 N번까지 순서대로 시계 방향으로 돌아가며 동그랗게 앉게 하고, 1번부터 시계방향으로 돌아가며 1부터 시작하여 번호를 외치게 한다.
+        K(특정숫자)를 외치면 그 왕자는 공주를 구하러 가는데서 제외된다. 그리고 다음 왕자부터 다시 1부터 시작하여 번호를 외친다. 
+        공주를 구하러 갈 왕자의 번호를 출력
+      */
+      function mySolution(n, k) {
+        let answer;
+        let queue = [];
+
+        for (let i = 1; i <= n; i++) {
+          queue.push(i);
+        }
+
+        for (let i = 1; i <= queue.length; i++) {
+          if (i % k === 0) {
+            queue.splice(i - 1, 1);
+          }
+        }
+
+        return answer;
+      }
+
+      /* 
+        💥 접근법
+        1. 1 ~ k-1까지 반복하면서 큐에서 빼낸 걸 다시 큐에 집어넣음(k를 외치지 않았으니까)
+        2. 그 다음 번은 자동적으로 k이므로 큐에서 빼냄 
+        3. 마지막 남은 큐의 요소가 답
+      */
+      function solution(n, k) {
+        let answer;
+        const queue = Array.from({ length: n }, (v, i) => i + 1); // 💡 n으로 배열 만들기
+
+        while (queue.length) {
+          if (queue.length === 1) {
+            answer = queue[0];
+            break;
+          }
+
+          for (let i = 1; i < k; i++) queue.push(queue.shift());
+          queue.shift();
+        }
+
+        return answer;
+      }
+
+      console.log(solution(8, 3)); // 7
+    </script>
+  </body>
+</html>
