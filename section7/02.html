@@ -1,0 +1,39 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      /* 
+        Q. 버블 정렬
+        N개의 숫자가 입력되면 오름차순으로 정렬하여 출력
+
+        💡 버블 정렬: 서로 인접한 두 원소를 검사하여 정렬
+          - 첫 번째 자료와 두 번째 자료를, 두 번째 자료와 세 번째 자료를, 세 번째와 네 번째를, … 이런 식으로 (마지막-1)번째 자료와 마지막 자료를 비교하여 교환하면서 자료를 정렬
+          - 1회전을 수행하고 나면 가장 큰 자료가 맨 뒤로 이동하므로 2회전에서는 맨 끝에 있는 자료는 정렬에서 제외되고, 2회전을 수행하고 나면 끝에서 두 번째 자료까지는 정렬에서 제외된다.
+
+        💥 - i가 0일 때 j < 0 ~ arr.length - 1 -> arr[j]와 arr[j+1]을 비교해서 바꿈 -> 맨 마지막 자리 결정됨
+            - i가 1일 때 j < 0 ~ arr.length - 2 ===> j < arr.length - i - 1
+              (j와 j + 1을 비교하므로 arr의 길이가 6이라면, 5번만 반복하면 됨)
+            - i도 1turn마다 마지막 자리가 결정되므로 arr.length - 1 까지만 반복하면 됨 
+      */
+      function solution(arr) {
+        let answer = arr;
+
+        for (let i = 0; i < answer.length - 1; i++) {
+          for (let j = 0; j < answer.length - i - 1; j++) {
+            if (answer[j] > answer[j + 1]) {
+              [answer[j], answer[j + 1]] = [answer[j + 1], answer[j]];
+            }
+          }
+        }
+
+        return answer;
+      }
+
+      let arr = [13, 5, 11, 7, 23, 15];
+      console.log(solution(arr)); // 5 7 11 13 15 23
+    </script>
+  </body>
+</html>
