@@ -1,0 +1,79 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      /* 
+        Q. 결혼식(그리디) 
+        친구들 N명의 오는 시간과 가는 시간의 정보를 바탕으로 피로연 장소에 동시에 존재하는 최대 인원수 구하기
+        만약 한 친구가 오는 시간 13, 가는 시간 15라면 이 친구는 13시 정각에 피로연 장에 존재하는 것이고 15시 정각에는 존재하지 않는다고 가정
+        (시간은 첫날 0시를 0으로 해서 마지막날 밤 12시를 72로 하는 타임라인)
+      */
+      function mySolution(times) {
+        let answer = Number.MIN_SAFE_INTEGER;
+        times.sort((a, b) => a[0] - b[0]);
+
+        /* 
+          오는 시간 기준 정렬
+          처음친구 가는 시간 > 다음 친구 오는 시간 => 카운팅 
+        */
+        for (let i = 0; i < times.length; i++) {
+          let cnt = 1;
+
+          for (let j = i + 1; j < times.length; j++) {
+            if (times[j][0] < times[i][1]) cnt++;
+            else {
+              answer = Math.max(answer, cnt);
+              break;
+            }
+          }
+        }
+
+        return answer;
+      }
+
+      /* 
+        💥 - 오는 시간(s), 가는 시간(e)을 분리, 구분하여 정렬 
+              *** 가는 시간과 오는 시간이 겹치면 가는 시간이 위에 오도록 -> 오는 시간이 먼저 오면 1이 더 카운팅 되어버림 
+            - s인 경우 증가
+            - e인 경우 감소 
+              - 매 반복마다 카운팅이 answer보다 크면 교체 
+      */
+      function solution(times) {
+        let answer = Number.MIN_SAFE_INTEGER;
+        const timeline = [];
+
+        for (let x of times) {
+          timeline.push([x[0], "s"]);
+          timeline.push([x[1], "e"]);
+        }
+        timeline.sort((a, b) => {
+          // 💡 charCodeAt(): 문자열 1개 아스키코드 값으로 변경: e가 먼저 정렬되도록!
+          if (a[0] === b[0]) return a[1].charCodeAt() - b[1].charCodeAt();
+          else return a[0] - b[0];
+        });
+
+        let cnt = 0;
+        for (let x of timeline) {
+          if (x[1] === "s") cnt++;
+          else cnt--;
+
+          answer = Math.max(answer, cnt);
+        }
+
+        return answer;
+      }
+
+      let arr = [
+        [14, 18],
+        [12, 15],
+        [15, 20],
+        [20, 30],
+        [5, 14],
+      ];
+      console.log(solution(arr)); // 2
+    </script>
+  </body>
+</html>

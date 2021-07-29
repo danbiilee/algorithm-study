@@ -52,17 +52,57 @@
 
       /* 
         💥 삽입 정렬 방식
+        - size 크기만큼 0으로 차있는 배열 생성
         - Cache Miss이면 size-1 ~ 1 까지 반복하면서 한 칸씩 뒤로 밀고(answer[i] = answer[i-1]), 0번째에 최신 값 삽입 
         - Cache Hit이면 hit지점부터 1까지만 반복하면서 한 칸씩 뒤로 밀고(answer[i] = answer[i-1]), 0번째에 최신 값 삽입  
+        - 뒤로 밀 때 캐시 사이즈를 초과하면 자동으로 제거되는 효과
       */
-      function solution(size, arr) {
+      function solution1(size, arr) {
+        let answer = Array.from({ length: size }, () => 0);
+
+        arr.forEach((x) => {
+          // 💡 indexOf() 직접 구현
+          let pos = -1;
+          for (let i = 0; i < size; i++) {
+            if (answer[i] === x) pos = i;
+          }
+
+          if (pos === -1) {
+            for (let i = size - 1; i >= 1; i--) {
+              answer[i] = answer[i - 1];
+            }
+          } else {
+            for (let i = pos; i >= 1; i--) {
+              answer[i] = answer[i - 1];
+            }
+          }
+          answer[0] = x;
+        });
+
+        return answer;
+      }
+
+      // 배열 내장함수 사용
+      function solution2(size, arr) {
         let answer = [];
+
+        for (let x of arr) {
+          let pos = answer.indexOf(x);
+
+          if (pos === -1) {
+            answer.unshift(x);
+            if (answer.length > size) answer.pop();
+          } else {
+            answer.splice(pos, 1);
+            answer.unshift(x);
+          }
+        }
 
         return answer;
       }
 
       let arr = [1, 2, 3, 2, 6, 2, 3, 5, 7];
-      console.log(solution(5, arr)); // 7 5 3 2 6
+      console.log(solution2(5, arr)); // 7 5 3 2 6
     </script>
   </body>
 </html>
