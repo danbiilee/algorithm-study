@@ -1,0 +1,41 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      /*
+        Q. 재귀함수를 이용한 이진수 출력
+        10진수 N이 입력되면 2진수로 변환하여 출력
+      */
+      function mySolution(n) {
+        let answer = "";
+        function recursive(x) {
+          if (x === 1) return x.toString();
+          else
+            return recursive(Math.floor(x / 2)) + (x - Math.floor(x / 2) * 2);
+        }
+        answer = recursive(n);
+        return answer;
+      }
+
+      function solution(n) {
+        let answer = "";
+
+        function DFS(L) {
+          if (L === 0) return;
+          else {
+            DFS(parseInt(L / 2));
+            answer += L % 2;
+          }
+        }
+
+        DFS(n);
+        return answer;
+      }
+
+      console.log(solution(11)); // 1011
+    </script>
+  </body>
+</html>

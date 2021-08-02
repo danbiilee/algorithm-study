@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      /* 
+        Q. 재귀함수와 스택프레임(중요)
+        재귀함수를 이용하여 1부터 N까지를 출력
+       */
+      function mySolution(n) {
+        function recursive(x) {
+          if (x === 1) return x;
+          return recursive(x - 1) + " " + x;
+        }
+        console.log(recursive(n));
+      }
+
+      /* 
+        💡 스택
+        - 호출된 함수 정보가 스택 프레임에 저장됨
+          - 정보: 매개변수, 지역변수, 복귀주소(호출된곳)
+        - 함수의 실행이 전부 완료되기 전까지는 스택에 계속 쌓여있음
+        - 스택의 가장 상단에 있는 함수가 종료되면, 스택에서 사라지고 자신이 호출된 곳으로 복귀 
+          *** 스택의 가장 상단에 있는 프레임이 현재 실행중인 함수
+      */
+      function solution(n) {
+        // DFS: 재귀함수명(깊이우선탐색), L: 레벨(트리)
+        function DFS(L) {
+          // 💡 초보땐 무조건 if else문 -> if에서 재귀 종료
+          if (L === 0) return;
+          else {
+            DFS(L - 1);
+            /* 
+              💡 출력을 재귀함수 호출 아래에 둬야 반대로 출력됨
+                -> 스택 원리: 가장 먼저 호출된 DFS함수가 스택의 가장 아래에 쌓여있기 때문에
+                              그 이후에 호출된 재귀함수가 실행 종료된 다음에 로그가 실행되도록 함
+            */
+            console.log(L);
+          }
+        }
+
+        DFS(n);
+      }
+
+      solution(3); // 1 2 3
+    </script>
+  </body>
+</html>
