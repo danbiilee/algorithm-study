@@ -13,8 +13,7 @@
         💡 각 원소는 부분집합에 참여/미참여 두가지 노드를 가짐 
             -> 각 노드는 부모노드가 되어 또 참여/미참여 자식 노드를 가짐
             -> 경우의 수: 2의 n승
-          - v === n + 1 일 때 return, 그 이전까지 출력
-          - 참여하지 않는 노드를 만나면 return, 그 이전까지 출력 
+          - v === n + 1 일 때, 부분집합 출력
           *** 참여여부 체크하는 배열 필요! 
       */
       function solution(n) {
@@ -27,11 +26,12 @@
             for (let i = 0; i < v; i++) {
               if (check[i] === 1) tmp += i + " ";
             }
+            // 공집합 제거
             if (tmp.length > 0) answer.push(tmp.trim());
           } else {
-            check[v] = 1;
+            check[v] = 1; // 왼쪽 노드 참여
             DFS(v + 1);
-            check[v] = 0;
+            check[v] = 0; // 오른쪽 노드 미참여
             DFS(v + 1);
           }
         }
