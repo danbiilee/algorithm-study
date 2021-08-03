@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      /* 
+        Q. 최대점수 구하기(DFS)
+          제한시간 M안에 N개의 문제 중 최대점수를 얻을 수 있도록.
+      */
+      function solution(m, ps, pt) {
+        let answer = Number.MIN_SAFE_INTEGER;
+
+        function DFS(t, sum) {
+          if (t > m) {
+            answer = Math.max(answer, sum);
+            return;
+          } else {
+            DFS();
+          }
+        }
+
+        const len = ps.length;
+        const sum = 0;
+        for (let i = 0; i < len; i++) {
+          console.log(ps[i], pt[i]);
+        }
+
+        return answer;
+      }
+
+      let ps = [10, 25, 15, 6, 7]; // 얻는 점수
+      let pt = [5, 12, 8, 3, 4]; // 걸리는 시간
+      console.log(solution(20, ps, pt));
+    </script>
+  </body>
+</html>
