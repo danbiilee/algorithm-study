@@ -9,9 +9,39 @@
         Q. 바둑이 승차(DFS)
         N마리의 바둑이와 각 바둑이의 무게 W가 주어지면, C킬로그램 용량의 트럭에 태울 수 있는 가장 무거운 무게를 구하기
       */
+      function mySolution(c, arr) {
+        let answer = Number.MIN_SAFE_INTEGER;
+
+        function DFS(L, sum) {
+          if (L > arr.length) {
+            if (sum <= c) answer = Math.max(answer, sum);
+          } else {
+            DFS(L + 1, sum + arr[L]);
+            DFS(L + 1, sum);
+          }
+        }
+
+        DFS(0, 0);
+        return answer;
+      }
+
+      // 💥 부분집합 방식
       function solution(c, arr) {
         let answer = Number.MIN_SAFE_INTEGER;
 
+        function DFS(L, sum) {
+          // 💥 재귀 호출조차 못하도록 리턴해버림
+          if (sum > c) return;
+
+          if (L === arr.length) {
+            answer = Math.max(answer, sum);
+          } else {
+            DFS(L + 1, sum + arr[L]);
+            DFS(L + 1, sum);
+          }
+        }
+
+        DFS(0, 0);
         return answer;
       }
 

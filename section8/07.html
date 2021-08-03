@@ -8,31 +8,32 @@
       /* 
         Q. 최대점수 구하기(DFS)
           제한시간 M안에 N개의 문제 중 최대점수를 얻을 수 있도록.
+
+          💥 부분집합 방식
+          💡 뎁스가 깊어지면 DFS 이진트리 방식으로는 시간 너무 오래 걸림
+            -> 다이나믹 프로그래밍
       */
       function solution(m, ps, pt) {
         let answer = Number.MIN_SAFE_INTEGER;
+        const n = ps.length;
 
-        function DFS(t, sum) {
-          if (t > m) {
-            answer = Math.max(answer, sum);
-            return;
+        function DFS(L, sumS, sumT) {
+          if (sumT > m) return;
+          if (L === n) {
+            answer = Math.max(answer, sumS);
           } else {
-            DFS();
+            DFS(L + 1, sumS + ps[L], sumT + pt[L]);
+            DFS(L + 1, sumS, sumT);
           }
         }
 
-        const len = ps.length;
-        const sum = 0;
-        for (let i = 0; i < len; i++) {
-          console.log(ps[i], pt[i]);
-        }
-
+        DFS(0, 0, 0);
         return answer;
       }
 
       let ps = [10, 25, 15, 6, 7]; // 얻는 점수
       let pt = [5, 12, 8, 3, 4]; // 걸리는 시간
-      console.log(solution(20, ps, pt));
+      console.log(mySolution(20, ps, pt)); // 41
     </script>
   </body>
 </html>
