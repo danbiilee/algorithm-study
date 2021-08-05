@@ -9,18 +9,32 @@
         Q. 동전교환(DFS-Cut Edge Tech)
         여러 단위의 동전들이 주어져 있을때 거스름돈(m)을 가장 적은 수의 동전으로 교환해주려면?
         각 단위의 동전은 무한정 쓸 수 있다.
+
+        💥 중복순열 방식
+          - L이 동전 개수, sum이 m과 같을 때 L이 답 
+          - DFS-Cut Edge Tech: d
       */
       function solution(m, arr) {
         let answer = Number.MAX_SAFE_INTEGER;
+        let n = arr.length;
 
-        function DFS(L) {
-          if (L === arr.length) {
+        function DFS(L, sum) {
+          // 💥 합계가 m에 걸리지 않고 그 이상이 되어버리면 무한반복 되어버림
+          if (sum > m) return;
+
+          // 💥 DFS-Cut Edge Tech: 이미 구한 개수보다 크거나 같으면 가지칠 필요 없음
+          if (L >= answer) return;
+
+          if (sum === m) {
+            answer = Math.min(answer, L);
           } else {
+            for (let i = 0; i < n; i++) {
+              DFS(L + 1, sum + arr[i]);
+            }
           }
         }
 
-        DFS(0);
-
+        DFS(0, 0);
         return answer;
       }
 

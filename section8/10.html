@@ -5,69 +5,45 @@
   </head>
   <body>
     <script>
+      /*
+        ❗ 솔루션 두 개
+
+        Q. 순열 구하기
+        10이하의 N개의 자연수가 주어지면 이 중 M개를 뽑아 일렬로 나열하는 방법을 모두 출력
+        맨 마지막 총 경우의 수를 출력하고, 출력순서는 사전순으로 오름차순으로 출력
+
+        💥 중복순열이 아니므로 한 번 사용된 건 체크해서 가지치기 하면 안됨 
+          - 체크배열([0,0,0]), tmp배열([0,0]) -> tmp[L] = arr[i]
+          - 뒤로 백할 때 체크 해제 
+      */
       function solution(m, arr) {
         let answer = [];
-        n = arr.length;
-        let ch = Array.from({ length: n }, () => 0);
-        let tmp = Array.from({ length: m }, () => 0);
+        const n = arr.length;
+        const check = Array.from({ length: n }, () => 0);
+        const tmp = Array.from({ length: m }, () => 0);
+
         function DFS(L) {
           if (L === m) {
             answer.push(tmp.slice());
           } else {
             for (let i = 0; i < n; i++) {
-              if (ch[i] === 0) {
-                ch[i] = 1;
-                tmp[L] = arr[i];
-                DFS(L + 1);
-                ch[i] = 0;
-              }
+              if (check[i] === 1) continue;
+
+              check[i] = 1; // 체크
+              tmp[L] = arr[i];
+              DFS(L + 1);
+              check[i] = 0; // 해제
             }
           }
         }
+
         DFS(0);
         return answer;
       }
 
       let arr = [3, 6, 9];
       console.log(solution(2, arr));
-    </script>
-  </body>
-</html>
-
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>출력결과</title>
-  </head>
-  <body>
-    <script>
-      /* 
-        Q. 순열 구하기
-        10이하의 N개의 자연수가 주어지면 이 중 M개를 뽑아 일렬로 나열하는 방법을 모두 출력
-        맨 마지막 총 경우의 수를 출력하고, 출력순서는 사전순으로 오름차순으로 출력
-      */
-      function solution(m, arr) {
-        let answer = [];
-        let n = arr.length;
-
-        function DFS(L) {
-          if (L === n) {
-            return;
-          } else {
-            for (let i = 0; i < n; i++) {
-              if (i === L) continue;
-              answer.push(arr[L] + " " + arr[i]);
-            }
-            DFS(L + 1);
-          }
-        }
-
-        return answer;
-      }
-
-      let arr = [3, 6, 9];
-      console.log(solution(2, arr));
-      /* 
+      /*
         3 6
         3 9
         6 3
