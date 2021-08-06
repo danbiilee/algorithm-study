@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      /* 
+        Q. 수들의 조합
+        N개의 정수 중 K개를 뽑는 조합의 합이 임의의 정수 M의 배수인 개수는 몇 개가 있는지 출력
+      */
+      function solution(n, k, arr, m) {
+        let answer = 0;
+        let ch = Array.from(Array(n), () => 0);
+        let b = Array.from(Array(k), () => 0);
+
+        function DFS(L) {
+          if (L === k) {
+            let sum = b.reduce((a, b) => a + b, 0);
+            if (sum % 6 === 0) {
+              answer++;
+              console.log(b);
+            }
+          } else {
+            for (let i = 1; i <= n; i++) {
+              if (ch[i] === 1) continue;
+              ch[i] = 1;
+              b[L] = arr[i];
+              DFS(L + 1);
+              ch[i] = 0;
+            }
+          }
+        }
+
+        DFS(0);
+
+        return answer;
+      }
+
+      let arr = [2, 4, 5, 8, 12];
+      console.log(solution(5, 3, arr, 6)); // 2: 4+8+12, 2+4+12
+    </script>
+  </body>
+</html>
