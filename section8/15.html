@@ -9,7 +9,7 @@
         Q. 수들의 조합
         N개의 정수 중 K개를 뽑는 조합의 합이 임의의 정수 M의 배수인 개수는 몇 개가 있는지 출력
       */
-      function solution(n, k, arr, m) {
+      function mySolution(n, k, arr, m) {
         let answer = 0;
         let ch = Array.from(Array(n), () => 0);
         let b = Array.from(Array(k), () => 0);
@@ -33,7 +33,27 @@
         }
 
         DFS(0);
+        return answer;
+      }
 
+      /* 
+        💥 DFS(L, S): arr의 길이만큼 반복문 돌면서 S = i + 1
+      */
+      function solution(n, k, arr, m) {
+        let answer = 0;
+
+        function DFS(L, S, sum) {
+          if (L === k) {
+            if (sum % m === 0) answer++;
+          } else {
+            // 💡 index이기 때문에 <= 가 아니라 < 해야 함
+            for (let i = S; i < n; i++) {
+              DFS(L + 1, i + 1, sum + arr[i]);
+            }
+          }
+        }
+
+        DFS(0, 0, 0);
         return answer;
       }
 
