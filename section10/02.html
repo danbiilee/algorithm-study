@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      /* 
+        Q. 돌다리 건너기 
+        한 번에 한 칸 또는 두 칸씩 건너뛰면서 돌다리를 건널 수 있을 때, N개의 돌로 이루어진 다리를 건너는 방법은 몇 가지일까요? 
+       */
+      function solution(n) {
+        let answer = 0;
+        let dy = Array.from({ length: n + 2 }, () => 0);
+        dy[1] = 1;
+        dy[2] = 2;
+
+        for (let i = 3; i <= n + 1; i++) {
+          dy[i] = dy[i - 2] + dy[i - 1];
+        }
+        answer = dy[n + 1]; // 💥 도착지점은 n+1 임!!!
+
+        return answer;
+      }
+
+      console.log(solution(7)); // 34
+    </script>
+  </body>
+</html>
