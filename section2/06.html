@@ -6,9 +6,9 @@
 	<body>
 		<script>
 			/* 
-        Q. 격자판 최대합
-        N의 격자판이 주어지면 각 행의 합, 각 열의 합, 두 대각선의 합 중 가 장 큰 합을 출력
-      */
+				Q. 격자판 최대합
+				N의 격자판이 주어지면 각 행의 합, 각 열의 합, 두 대각선의 합 중 가 장 큰 합을 출력
+			*/
 			function mySolution(arr) {
 				let answer = Number.MIN_SAFE_INTEGER;
 				let sum = [];
@@ -39,8 +39,8 @@
 			}
 
 			/* 
-        💥 모든 합들을 배열에 넣어놓고 맨 마지막에 최대값을 구하는 게 아니라 매번 반복문을 돌 때마다 최대값 비교
-       */
+				💥 모든 합들을 배열에 넣어놓고 맨 마지막에 최대값을 구하는 게 아니라 매번 반복문을 돌 때마다 최대값 비교
+			*/
 			function solution(arr) {
 				let answer = Number.MIN_SAFE_INTEGER;
 				let n = arr.length;
@@ -65,6 +65,33 @@
 				}
 				answer = Math.max(answer, sum1, sum2);
 
+				return answer;
+			}
+			
+			// 08-27 추가: 이게 더 깔끔하지 않나! 
+			function mySolution2(arr) {
+				let answer = 0;
+				const sum = [];
+				const n = arr.length;
+				
+				let crossL = 0;
+				let crossR = 0;
+				for(let i = 0; i < n; i++) {
+					crossL += arr[i][i];
+					crossR += arr[i][n-1-i];
+
+					let row = 0;
+					let col = 0;
+					for(let j = 0; j < n; j++) {
+						row += arr[i][j];
+						col += arr[j][i];
+					}
+					sum.push(row, col);
+				}
+				sum.push(crossL);
+				sum.push(crossR);
+				
+				answer = Math.max(...sum);
 				return answer;
 			}
 
