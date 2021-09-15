@@ -57,6 +57,9 @@
         // 1. 멘토, 멘티 번호 찾기
         for (let i = 1; i <= 학생수; i++) {
           for (let j = 1; j <= 학생수; j++) {
+            if(i === j) {
+				      continue;
+			      }
             // 2. 시험 등수 찾기
             let cnt = 0;
             for (let k = 0; k < 테스트수; k++) {
