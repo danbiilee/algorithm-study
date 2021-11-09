@@ -37,9 +37,10 @@
       /* 
         💥 - 오는 시간(s), 가는 시간(e)을 분리, 구분하여 정렬 
               *** 가는 시간과 오는 시간이 겹치면 가는 시간이 위에 오도록 -> 오는 시간이 먼저 오면 1이 더 카운팅 되어버림 
-            - s인 경우 증가
-            - e인 경우 감소 
-              - 매 반복마다 카운팅이 answer보다 크면 교체 
+            - 차례대로 count에 현재 존재하는 인원수 구함 
+              - s인 경우 count++
+              - e인 경우 count--
+              - 매 반복마다 count가 answer보다 크면 교체 
       */
       function solution(times) {
         let answer = Number.MIN_SAFE_INTEGER;
