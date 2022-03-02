@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const getTreeObject = (
+        payload = [
+          {
+            ID: 0,
+            RESOURCE_NM: "Network Group",
+            LIST: [
+              {
+                ID: 1,
+                RESOURCE_NM: "S4048-BB",
+                LIST: [],
+              },
+              {
+                ID: 5,
+                RESOURCE_NM: "cisco-2611-44",
+                LIST: [
+                  {
+                    ID: 6,
+                    RESOURCE_NM: "test-00-001",
+                    LIST: [],
+                  },
+                  {
+                    ID: 7,
+                    RESOURCE_NM: "test-00-002",
+                    LIST: [],
+                  },
+                  {
+                    ID: 8,
+                    RESOURCE_NM: "test-00-003",
+                    LIST: [],
+                  },
+                  {
+                    ID: 9,
+                    RESOURCE_NM: "test-00-004",
+                    LIST: [],
+                  },
+                  {
+                    ID: 10,
+                    RESOURCE_NM: "test-00-005",
+                    LIST: [],
+                  },
+                ],
+              },
+            ],
+          },
+        ]
+      ) => {
+        const result = {
+          ROOT: {
+            totalDepth: 0,
+            children: {},
+          },
+        };
+
+        let isAcc = false;
+
+        function makeObject(depth, v, parent) {
+          if (isAcc) {
+            console.log("isAcc", depth, v.RESOURCE_NM);
+          } else {
+            if (!v.LIST || !v.LIST.length) {
+              isAcc = true;
+              makeObject(depth + 1, v);
+              isAcc = false;
+              return;
+            }
+
+            console.log(depth, v.RESOURCE_NM);
+
+            for (let item of v.LIST) {
+              makeObject(depth + 1, item);
+            }
+          }
+        }
+
+        makeObject(0, payload[0]);
+
+        return result;
+      };
+
+      console.log(getTreeObject());
+    </script>
+  </body>
+</html>
