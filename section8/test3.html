@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const getTreeObject = (
+        payload = [
+          {
+            ID: 0,
+            RESOURCE_NM: 'Network Group',
+            LIST: [
+              {
+                ID: 1,
+                RESOURCE_NM: 'S4048-BB',
+                // LIST: [],
+                LIST: [
+                  {
+                    ID: 2,
+                    RESOURCE_NM: 'test-001',
+                    LIST: [
+                      // {
+                      //   ID: 20,
+                      //   RESOURCE_NM: 'test-001--aaa',
+                      //   LIST: [],
+                      // },
+                    ],
+                  },
+                  {
+                    ID: 3,
+                    RESOURCE_NM: 'test-002',
+                    LIST: [],
+                  },
+                  {
+                    ID: 4,
+                    RESOURCE_NM: 'test-003',
+                    LIST: [],
+                  },
+                ],
+              },
+              {
+                ID: 5,
+                RESOURCE_NM: 'cisco-2611-44',
+                LIST: [
+                  {
+                    ID: 6,
+                    RESOURCE_NM: 'test-00-001',
+                    LIST: [],
+                  },
+                  {
+                    ID: 7,
+                    RESOURCE_NM: 'test-00-002',
+                    LIST: [],
+                  },
+                  {
+                    ID: 8,
+                    RESOURCE_NM: 'test-00-003',
+                    LIST: [],
+                  },
+                  {
+                    ID: 9,
+                    RESOURCE_NM: 'test-00-004',
+                    LIST: [],
+                  },
+                  {
+                    ID: 10,
+                    RESOURCE_NM: 'test-00-005',
+                    LIST: [],
+                  },
+                ],
+              },
+            ],
+          },
+        ]
+      ) => {
+        const result = {
+          ROOT: {
+            totalDepth: 0,
+            children: {},
+          },
+        };
+
+        let bool = false;
+        const arr = [];
+        const arrCnt = Array.from({ length: 10 }, () => 0);
+
+        function makeObject(depth, v, children) {
+          if (bool) {
+            arr[depth][v.RESOURCE_NM] = {
+              id: v.ID,
+              depth,
+              checked: false,
+              expandable: false,
+              expanded: false,
+            };
+            // arrCnt[depth] += 1;
+            console.log('-----', depth, v.RESOURCE_NM, [...arr], [...arrCnt]);
+          } else {
+            arr[depth] = {
+              ...arr[depth],
+              [v.RESOURCE_NM]: {
+                id: v.ID,
+                depth,
+                checked: false,
+                expandable: true,
+                expanded: true,
+                checkedChildrenCnt: 0,
+              },
+            };
+
+            if (depth > 0) {
+              arrCnt[depth] += 1;
+            }
+
+            if (!v.LIST || !v.LIST.length) {
+              bool = true;
+              makeObject(depth, v);
+              bool = false;
+              return;
+            }
+
+            console.log('-s-', depth, v.RESOURCE_NM, [...arr], [...arrCnt]);
+            for (let item of v.LIST) {
+              makeObject(depth + 1, item);
+            }
+            console.log('-e-', depth, v.RESOURCE_NM, [...arr], [...arrCnt]);
+
+            arr[depth][v.RESOURCE_NM].children = arr[depth + 1];
+            arr[depth][v.RESOURCE_NM].childrenCnt = arrCnt[depth + 1];
+
+            if (depth > 0) {
+              arrCnt[0] += arrCnt[depth + 1];
+            }
+            arrCnt[depth + 1] = 0; // init
+
+            if (depth === 0) {
+              arr[depth][v.RESOURCE_NM].childrenCnt = arrCnt[depth];
+              result.ROOT.children = arr[depth];
+              result.ROOT.totalDepth = arr.length;
+            }
+          }
+        }
+
+        makeObject(0, payload[0]);
+
+        return result;
+      };
+
+      console.log(getTreeObject());
+    </script>
+  </body>
+</html>

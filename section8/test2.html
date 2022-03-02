@@ -12,40 +12,63 @@
         payload = [
           {
             ID: 0,
-            RESOURCE_NM: "Network Group",
+            RESOURCE_NM: 'Network Group',
             LIST: [
               {
                 ID: 1,
-                RESOURCE_NM: "S4048-BB",
+                RESOURCE_NM: 'S4048-BB',
                 LIST: [],
+                // LIST: [
+                //   {
+                //     ID: 2,
+                //     RESOURCE_NM: 'test-001',
+                //     LIST: [
+                //       {
+                //         ID: 20,
+                //         RESOURCE_NM: 'test-001--aaa',
+                //         LIST: [],
+                //       },
+                //     ],
+                //   },
+                //   {
+                //     ID: 3,
+                //     RESOURCE_NM: 'test-002',
+                //     LIST: [],
+                //   },
+                //   {
+                //     ID: 4,
+                //     RESOURCE_NM: 'test-003',
+                //     LIST: [],
+                //   },
+                // ],
               },
               {
                 ID: 5,
-                RESOURCE_NM: "cisco-2611-44",
+                RESOURCE_NM: 'cisco-2611-44',
                 LIST: [
                   {
                     ID: 6,
-                    RESOURCE_NM: "test-00-001",
+                    RESOURCE_NM: 'test-00-001',
                     LIST: [],
                   },
                   {
                     ID: 7,
-                    RESOURCE_NM: "test-00-002",
+                    RESOURCE_NM: 'test-00-002',
                     LIST: [],
                   },
                   {
                     ID: 8,
-                    RESOURCE_NM: "test-00-003",
+                    RESOURCE_NM: 'test-00-003',
                     LIST: [],
                   },
                   {
                     ID: 9,
-                    RESOURCE_NM: "test-00-004",
+                    RESOURCE_NM: 'test-00-004',
                     LIST: [],
                   },
                   {
                     ID: 10,
-                    RESOURCE_NM: "test-00-005",
+                    RESOURCE_NM: 'test-00-005',
                     LIST: [],
                   },
                 ],
@@ -61,23 +84,29 @@
           },
         };
 
-        let isAcc = false;
+        const nests = {};
 
-        function makeObject(depth, v, parent) {
-          if (isAcc) {
-            console.log("isAcc", depth, v.RESOURCE_NM);
-          } else {
-            if (!v.LIST || !v.LIST.length) {
-              isAcc = true;
-              makeObject(depth + 1, v);
-              isAcc = false;
-              return;
+        function makeObject(depth, v, children) {
+          if (!v.LIST || !v.LIST.length) {
+            console.log('-----', depth, v.RESOURCE_NM);
+            children[v.RESOURCE_NM] = null;
+            if (!nests[v.RESOURCE_NM]) {
+              nests[v.RESOURCE_NM] = null;
             }
+          } else {
+            const obj = {};
 
-            console.log(depth, v.RESOURCE_NM);
-
+            console.log('-s-', depth, v.RESOURCE_NM, obj);
             for (let item of v.LIST) {
-              makeObject(depth + 1, item);
+              makeObject(depth + 1, item, obj);
+            }
+            console.log('-e-', depth, v.RESOURCE_NM, obj);
+
+            if (depth > 0) {
+              nests[v.RESOURCE_NM] = obj;
+            } else {
+              console.log('=======', nests);
+              result.ROOT.children[v.RESOURCE_NM] = nests;
             }
           }
         }
