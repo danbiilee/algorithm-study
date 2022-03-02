@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const getTreeObject = (
+        payload = [
+          {
+            ID: 0,
+            RESOURCE_NM: "Network Group",
+            LIST: [
+              {
+                ID: 1,
+                RESOURCE_NM: "S4048-BB",
+                LIST: [
+                  {
+                    ID: 2,
+                    RESOURCE_NM: "test-001",
+                    LIST: [
+                      {
+                        ID: 100,
+                        RESOURCE_NM: "test-001-aaa",
+                        LIST: [],
+                      },
+                    ],
+                  },
+                  {
+                    ID: 3,
+                    RESOURCE_NM: "test-002",
+                    LIST: [],
+                  },
+                  {
+                    ID: 4,
+                    RESOURCE_NM: "test-003",
+                    LIST: [],
+                  },
+                ],
+              },
+              {
+                ID: 5,
+                RESOURCE_NM: "cisco-2611-44",
+                LIST: [
+                  {
+                    ID: 6,
+                    RESOURCE_NM: "test-00-001",
+                    LIST: [],
+                  },
+                  {
+                    ID: 7,
+                    RESOURCE_NM: "test-00-002",
+                    LIST: [],
+                  },
+                  {
+                    ID: 8,
+                    RESOURCE_NM: "test-00-003",
+                    LIST: [],
+                  },
+                  {
+                    ID: 9,
+                    RESOURCE_NM: "test-00-004",
+                    LIST: [],
+                  },
+                  {
+                    ID: 10,
+                    RESOURCE_NM: "test-00-005",
+                    LIST: [],
+                  },
+                ],
+              },
+            ],
+          },
+        ]
+      ) => {
+        const result = {
+          ROOT: {
+            totalDepth: 0,
+            children: {},
+          },
+        };
+        const nests = [];
+
+        function makeObject(v, depth) {
+          if (!v.LIST || !v.LIST.length) {
+            console.log(depth, v.RESOURCE_NM, [...nests]);
+            result.ROOT.totalDepth = Math.max(
+              result.ROOT.totalDepth,
+              depth + 1
+            );
+            children[v.RESOURCE_NM] = {
+              id: v.ID,
+              depth,
+              checked: false,
+              expandable: false,
+              expanded: false,
+            };
+          } else {
+            nests[depth] = {
+              key: v.RESOURCE_NM,
+              data: {
+                id: v.ID,
+                depth,
+                checked: false,
+                expandable: true,
+                expanded: true,
+                childrenCnt: 0,
+                checkedChildrenCnt: 0,
+                children: {},
+              },
+            };
+
+            nests[depth] = {
+              key: v.RESOURCE_NM,
+            };
+
+            for (let item of v.LIST) {
+              makeObject(item, depth + 1);
+            }
+
+            if (depth === 0) {
+              result.ROOT.children = {
+                [nests[0].key]: nests[0].data,
+              };
+            } else {
+              const curr = nests[depth].data;
+              const prev = nests[depth - 1].data;
+
+              nests[depth].data = {
+                ...nests[depth].data,
+                childrenCnt: Object.keys(children).length,
+                children,
+              };
+
+              nests[depth - 1].data.childrenCnt +=
+                nests[depth].data.childrenCnt;
+              nests[depth - 1].data.children = {
+                ...nests[depth - 1].data.children,
+                [nests[depth].key]: nests[depth].data,
+              };
+            }
+
+            console.log(depth, v.RESOURCE_NM, [...nests]);
+          }
+        }
+
+        makeObject(payload[0], 0);
+
+        return result;
+      };
+
+      console.log(getTreeObject());
+    </script>
+  </body>
+</html>
