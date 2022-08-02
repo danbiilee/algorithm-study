@@ -1,4 +1,4 @@
-<html>
+<html lang="ko">
   <head>
     <meta charset="UTF-8" />
     <title>출력결과</title>
@@ -26,6 +26,13 @@
         }
 
         return answer;
+      }
+
+      // 코드 단축 버전
+      function solution2(a, b, c) {
+        const max = a > b ? a : b > c ? b : c;
+        const sum = a + b + c - max;
+        return max < sum ? 'YES' : 'NO';
       }
 
       console.log(solution(13, 33, 17));
