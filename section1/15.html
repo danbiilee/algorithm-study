@@ -23,18 +23,16 @@
         return answer;
       }
 
-      // 💡 substring: startIndex ~ endIndex - 1
-      // 💡 substr: startIndex부터 length만큼
+      // 💡 substring: startIndex ~ endIndex + 1
+      // 💡 substr: startIndex부터 length만큼 -> deprecated, 표준 아님
       function solution(s) {
         let answer = "";
         let mid = Math.floor(s.length / 2); // floor: 몫
 
         if (s.length % 2 !== 0) {
-          // answer = s.substring(mid, mid + 1);
-          answer = s.substr(mid, 1);
+          answer = s.substring(mid, mid + 1);
         } else {
-          // answer = s.substring(mid - 1, mid + 1);
-          answer = s.substr(mid - 1, 2);
+          answer = s.substring(mid - 1, mid + 1);
         }
 
         return answer;
