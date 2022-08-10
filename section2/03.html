@@ -1,4 +1,4 @@
-<html>
+<html lang="ko">
 	<head>
 		<meta charset="UTF-8" />
 		<title>출력결과</title>
@@ -47,25 +47,36 @@
 			}
 
 			/* 
-        💡 풀이법
-        1. 비기는 경우
-        2. A가 이기는 경우
-          1 - 3
-          2 - 1
-          3 - 2
-        3. 그 외에는 B가 이김
-        💡 팁: 기준을 뭘로 잡는 지가 중요!
-      */
+				💡 풀이법
+				1. 비기는 경우
+				2. A가 이기는 경우
+				  1 - 3
+				  2 - 1
+				  3 - 2
+				3. 그 외에는 B가 이김
+				💡 팁: 기준을 뭘로 잡는 지가 중요!
+			*/
 			function solution(a, b) {
 				let answer = [];
 				for (let i = 0; i < a.length; i++) {
-					if (a[i] === b[i]) {
+					// if (a[i] === b[i]) {
+					// 	answer.push('D');
+					// } else if (a[i] === 1 && b[i] === 3) {
+					// 	answer.push('A');
+					// } else if (a[i] === 2 && b[i] === 1) {
+					// 	answer.push('A');
+					// } else if (a[i] === 3 && b[i] === 2) {
+					// 	answer.push('A');
+					// } else {
+					// 	answer.push('B');
+					// }
+
+					const aVal = a[i];
+					const bVal = b[i];
+
+					if(aVal === bVal) {
 						answer.push('D');
-					} else if (a[i] === 1 && b[i] === 3) {
-						answer.push('A');
-					} else if (a[i] === 2 && b[i] === 1) {
-						answer.push('A');
-					} else if (a[i] === 3 && b[i] === 2) {
+					} else if(aVal === 1 && bVal === 3 || aVal === 2 && bVal === 1 || aVal === 3 && bVal === 2) {
 						answer.push('A');
 					} else {
 						answer.push('B');
