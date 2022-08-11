@@ -1,4 +1,4 @@
-<html>
+<html lang="ko">
 	<head>
 		<meta charset="UTF-8" />
 		<title>출력결과</title>
@@ -67,32 +67,37 @@
 
 				return answer;
 			}
-			
-			// 08-27 추가: 이게 더 깔끔하지 않나! 
-			function mySolution2(arr) {
-				let answer = 0;
-				const sum = [];
-				const n = arr.length;
-				
-				let crossL = 0;
-				let crossR = 0;
-				for(let i = 0; i < n; i++) {
-					crossL += arr[i][i];
-					crossR += arr[i][n-1-i];
 
-					let row = 0;
-					let col = 0;
-					for(let j = 0; j < n; j++) {
-						row += arr[i][j];
-						col += arr[j][i];
+			function mySolution2(arr) {
+				let len = arr.length
+				let answer = [];
+				let crossLeftSum = 0;  // 1,1 ~ 5,5
+				let crossRightSum = 0; // 1,5 ~ 5,1
+				/**
+				 * 1,1             1,5
+				 *     2,2     2,4
+				 *         3,3
+				 *     4,2     4,4
+				 * 5,1             5,5
+				 */
+
+				for(let i = 0; i < len; i++) {
+					let verticalSum = 0;
+					let horizontalSum = 0;
+
+					crossLeftSum += arr[i][i];
+					crossRightSum += arr[i][len - i - 1];
+
+					for(let j = 0; j < len; j++) {
+						horizontalSum += arr[i][j];
+						verticalSum += arr[j][i];
 					}
-					sum.push(row, col);
+
+					answer.push(horizontalSum, verticalSum);
 				}
-				sum.push(crossL);
-				sum.push(crossR);
-				
-				answer = Math.max(...sum);
-				return answer;
+
+				answer.push(crossLeftSum, crossRightSum);
+				return Math.max(...answer);
 			}
 
 			let arr = [
