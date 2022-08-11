@@ -1,4 +1,4 @@
-<html>
+<html lang="ko">
 	<head>
 		<meta charset="UTF-8" />
 		<title>출력결과</title>
@@ -46,7 +46,7 @@
 			/* 
         💥 풀이법
         1. 상하좌우 이동을 위한 x, y 좌표 증감값을 배열에 담아두고, k-for문 돌면서 방향 탐색
-        2. 가장자리는 나보다 낮다고 생각할 것 
+        2. 가장자리는 나보다 낮다고 생각할 것
       */
 			function solution(arr) {
 				let answer = 0;
@@ -80,6 +80,34 @@
 						}
 					}
 				}
+				return answer;
+			}
+
+			// 2022.08.11 추가: 위 방법보다 이게 낫지 않을까? 저건 반복문 세번 중첩인데
+			function mySolution2 (arr) {
+				let len = arr.length
+				let answer = 0;
+
+				/**
+				 *      1,2
+				 *  2,1 2,2 2,3
+				 *      3,2
+				 */
+
+				const getNumber = (value) => value || 0;
+
+				for(let i = 0; i < len; i++) {
+					for(let j = 0; j < len; j++) {
+						const curr = arr[i][j];
+						if(curr > getNumber(arr[i][j - 1])
+								&& curr > getNumber(arr[i][j + 1])
+								&& curr > getNumber(arr[i - 1]?.[j])
+								&& curr > getNumber(arr[i + 1]?.[j])) {
+							answer++;
+						}
+					}
+				}
+
 				return answer;
 			}
 
