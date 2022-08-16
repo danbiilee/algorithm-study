@@ -1,4 +1,4 @@
-<html>
+<html lang="ko">
   <head>
     <meta charset="UTF-8" />
     <title>출력결과</title>
@@ -9,49 +9,40 @@
         Q. 문자열 s의 각 문자가 문자 t와 떨어진 최소거리를 출력. 문자열의 길이는 100을 넘지 않는다.
           (문자열과 문자는 소문자로만 주어집니다.)
       */
-      function mySolution(s, t) {
-        let answer = [];
-        let n = s.length;
+      function mySolution (str, s) {
+        let answer = {};
+        let prevIdx = 0;
+        let distance = 1;
 
-        for (let i = 0; i < n; i++) {
-          let len = [];
-          let flag = true;
-          let count = 1;
-
-          if (s[i] === t) {
-            len.push(0);
-            flag = false;
+        // s를 찾을 때까지 1씩 증가하면서 떨어진 거리를 기록
+        // s를 찾으면 이전 s까지 되돌아가면서 떨어진 최소거리를 비교
+        //  -> 이전 s가 없다면 첫번째 s의 경우이므로 되돌아가지 않음
+        //  -> 새로운 s와의 떨어진 거리와 이전 s와의 떨어진 거리가 같으면 되돌아가는 걸 멈춤
+        // 다시 1부터 반복
+        for(let i = 0, len = str.length; i < len; i++) {
+          if(str[i] !== s) {
+            answer[i] = distance++;
+            continue;
           }
 
-          // 해당 문자보다 앞에 있는 문자들 탐색
-          if (flag && i > 0) {
-            for (let j = i - 1; j >= 0; j--) {
-              if (s[j] === t) {
-                len.push(count);
+          answer[i] = 0;
+
+          if(prevIdx) {
+            distance = 1;
+            for(let j = i - 1; j > prevIdx; j--) {
+              const prevVal = answer[j];
+              if(prevVal === distance) {
                 break;
-              } else {
-                count++;
               }
+              answer[j] = Math.min(prevVal, distance++);
             }
           }
 
-          count = 1;
-          // 해당 문자보다 뒤에 있는 문자들 탐색
-          if (flag && i < n - 1) {
-            for (let j = i + 1; j < n; j++) {
-              if (s[j] === t) {
-                len.push(count);
-                break;
-              } else {
-                count++;
-              }
-            }
-          }
-
-          answer.push(Math.min(...len));
+          distance = 1;
+          prevIdx = i;
         }
 
-        return answer;
+        return Object.values(answer);
       }
 
       /* 
