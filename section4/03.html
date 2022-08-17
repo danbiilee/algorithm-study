@@ -15,17 +15,20 @@
         let numOfStudents = arr[0].length;
         let numOfTests = arr.length;
 
+        const findMentees = (mentor, scores) => {
+          const mentorIdx = scores.findIndex(score => score === mentor);
+          return scores.slice(mentorIdx + 1);
+        }
+
         // 각 테스트마다 멘티가 될 수 있는 학생 찾기 -> 이전 테스트의 멘티 목록과 비교해서 유효한 멘티만 남겨둠
         for(let mentor = 1; mentor <= numOfStudents; mentor++) {
-          let mentees = arr[0].slice(arr[0].findIndex(score => score === mentor) + 1);
+          let mentees = findMentees(mentor, arr[0]);
 
           for(let i = 1; i < numOfTests; i++) {
             if(!mentees.length) {
               break;
             }
-            const scores = arr[i];
-            const mentorIdx = scores.findIndex(score => score === mentor);
-            const compares = scores.slice(mentorIdx + 1);
+            const compares = findMentees(mentor, arr[i]);
             mentees = compares.filter(compare => mentees.find(mentee => mentee === compare));
           }
 
