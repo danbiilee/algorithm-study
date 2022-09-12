@@ -1,4 +1,4 @@
-<html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <title>출력결과</title>
@@ -8,10 +8,31 @@
       /* 
         Q. 오름차순으로 정렬이 된 두 배열을 오름차순으로 합쳐 출력하는 프로그램을 작성하세요.
       */
-      function mySolution(arr1, arr2) {
-        let answer = [];
-        let tmp = arr1.concat(arr2);
-        answer = tmp.sort();
+      function mySolution(a, b) {
+        const answer = [];
+        const lenA = a.length;
+        const lenB = b.length;
+        let cursorA = 0;
+        let cursorB = 0;
+
+        while(cursorA < lenA && cursorB < lenB) {
+          const nextA = a[cursorA++];
+          const nextB = b[cursorB++];
+
+          if(nextA < nextB) {
+            answer.push(nextA, nextB);
+          } else {
+            answer.push(nextB, nextA);
+          }
+        }
+
+        while(cursorA < lenA) {
+          answer.push(a[cursorA++]);
+        }
+        while(cursorB < lenB) {
+          answer.push(b[cursorB++]);
+        }
+
         return answer;
       }
 
