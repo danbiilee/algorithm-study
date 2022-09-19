@@ -9,19 +9,16 @@
         Q. 최대 매출(Sliding Window)  
           N일 동안의 매출기록 중 연속된 K일 동안의 최대 매출액이 얼마인지 구하라
       */
-      function mySolution(k, arr) {
-        let answer;
-        let tmp = [];
+      function mySolution (k, arr) {
+        let sum = arr.slice(0, k).reduce((prev, curr) => prev + curr, 0);
+        let answer = sum;
+        let lt = 0;
 
-        for (let i = 0; i < arr.length - 2; i++) {
-          let sum = 0;
-          for (let j = i; j < i + 3; j++) {
-            sum += arr[j];
-          }
-          tmp.push(sum);
+        for(let rt = k, len = arr.length; rt < len; rt++) {
+          sum = sum - arr[lt++] + arr[rt];
+          answer = Math.max(answer, sum);
         }
 
-        answer = Math.max(...tmp);
         return answer;
       }
 
